@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export default function Settings() {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(() => document.documentElement.classList.contains('dark'));
 
   const toggle = () => {
     const next = !dark;

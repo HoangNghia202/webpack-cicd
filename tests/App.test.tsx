@@ -31,6 +31,21 @@ it('toggles dark mode on the settings page', () => {
   expect(screen.getByRole('button', { name: /switch to light/i })).toBeInTheDocument();
 });
 
+it('preserves the toggle state after navigating away from and back to settings', () => {
+  renderAt('/settings');
+  fireEvent.click(screen.getByRole('button', { name: /switch to dark/i }));
+  expect(document.documentElement).toHaveClass('dark');
+
+  fireEvent.click(screen.getByRole('link', { name: 'Dashboard' }));
+  expect(screen.getByRole('heading', { name: 'Dashboard' })).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('link', { name: 'Settings' }));
+
+  expect(document.documentElement).toHaveClass('dark');
+  fireEvent.click(screen.getByRole('button', { name: /switch to light/i }));
+  expect(document.documentElement).not.toHaveClass('dark');
+  expect(screen.getByRole('button', { name: /switch to dark/i })).toBeInTheDocument();
+});
+
 it('navigates with the main nav', () => {
   renderAt('/');
   fireEvent.click(screen.getByRole('link', { name: 'Tables' }));
