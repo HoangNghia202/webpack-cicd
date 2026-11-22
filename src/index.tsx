@@ -1,3 +1,4 @@
+import '@fontsource/inter/400.css';
 import '@/styles/tailwind.css';
 import '@/styles/global.scss';
 import { createRoot } from 'react-dom/client';

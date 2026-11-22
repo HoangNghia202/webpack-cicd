@@ -54,4 +54,24 @@ describe('production build', () => {
       dom.window.close();
     }
   });
+
+  it('asset/resource: ?url svg is emitted as a file', () => {
+    expect(build.files).toContain('assets/pattern.svg');
+  });
+
+  it('SVGR: default svg import becomes a component, not a file', () => {
+    expect(build.files).not.toContain('assets/logo.svg');
+  });
+
+  it('asset/inline: ?inline svg is embedded as a data URI', () => {
+    expect(build.js).toContain('data:image/svg+xml;base64');
+  });
+
+  it('asset/source: ?raw text is embedded verbatim', () => {
+    expect(build.js).toContain('RAW_SOURCE_MARKER');
+  });
+
+  it('emits fontsource woff2 files under fonts/', () => {
+    expect(build.files.some((f) => /^fonts\/.+\.woff2$/.test(f))).toBe(true);
+  });
 });

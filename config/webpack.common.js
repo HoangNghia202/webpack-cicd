@@ -34,6 +34,7 @@ module.exports = {
   output: {
     path: path.resolve(root, 'dist'),
     filename: 'js/[name].js',
+    assetModuleFilename: 'assets/[name][ext]',
     publicPath: '/',
     clean: true,
   },
@@ -48,6 +49,20 @@ module.exports = {
       styleRule({ test: /\.module\.css$/, modules: true }),
       styleRule({ test: /\.scss$/, exclude: /\.module\.scss$/, sass: true }),
       styleRule({ test: /\.css$/, exclude: /\.module\.css$/ }),
+      { test: /\.svg$/i, resourceQuery: /url/, type: 'asset/resource' },
+      { test: /\.svg$/i, resourceQuery: /inline/, type: 'asset/inline' },
+      { test: /\.svg$/i, resourceQuery: { not: [/url/, /inline/] }, use: ['@svgr/webpack'] },
+      { resourceQuery: /raw/, type: 'asset/source' },
+      {
+        test: /\.(png|jpe?g|gif|webp)$/i,
+        type: 'asset',
+        parser: { dataUrlCondition: { maxSize: 8 * 1024 } },
+      },
+      {
+        test: /\.(woff2?|ttf|eot)$/i,
+        type: 'asset/resource',
+        generator: { filename: 'fonts/[name][ext]' },
+      },
     ],
   },
   plugins: [
