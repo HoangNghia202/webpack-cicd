@@ -1,6 +1,7 @@
 /** @jest-environment node */
 import fs from 'node:fs';
 import path from 'node:path';
+import { JSDOM, VirtualConsole } from 'jsdom';
 import { buildProd } from './helpers';
 
 let build: Awaited<ReturnType<typeof buildProd>>;
@@ -39,7 +40,6 @@ describe('production build', () => {
   });
 
   it('renders the table with its scoped class in the production bundle', async () => {
-    const { JSDOM, VirtualConsole } = require('jsdom');
     const dom = new JSDOM('<!doctype html><div id="root"></div>', {
       url: 'http://localhost/tables',
       runScripts: 'dangerously',
