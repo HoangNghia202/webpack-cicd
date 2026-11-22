@@ -4,7 +4,16 @@ const hooks = require('eslint-plugin-react-hooks');
 const prettier = require('eslint-config-prettier');
 
 module.exports = tseslint.config(
-  { ignores: ['dist', 'node_modules', 'coverage'] },
+  {
+    ignores: [
+      'dist',
+      '**/dist/**',
+      'node_modules',
+      'coverage',
+      '.worktrees/**',
+      '.webpack-build-*/**',
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {

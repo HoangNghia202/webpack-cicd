@@ -80,3 +80,12 @@ the original TSX with its source line numbers and `Settings` component, rather
 than only the generated bundle. The page also visibly rendered its heading,
 environment/version text, SVG and font assets, and the light navigation link
 on the dark sidebar.
+
+## React Router advisory decision
+
+Task 9's production audit reported two moderate findings through React Router
+and proposed a breaking upgrade to v7. The upgrade is deferred because the
+plan requires react-router-dom 6, and the current app uses static links without
+SSR or data-router hydration. Reassess the advisories before introducing
+user-controlled navigation or SSR; this decision does not establish that future
+uses are safe.

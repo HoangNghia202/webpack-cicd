@@ -1,7 +1,8 @@
 module.exports = {
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/tests/setup.ts'],
-  testPathIgnorePatterns: ['/node_modules/', '/dist/'],
+  testPathIgnorePatterns: ['/node_modules/', '/dist/', '<rootDir>/\\.worktrees/'],
+  modulePathIgnorePatterns: ['<rootDir>/\\.worktrees/'],
   moduleNameMapper: {
     '\\.module\\.s?css$': 'identity-obj-proxy',
     '\\.s?css$': '<rootDir>/tests/mocks/empty.js',

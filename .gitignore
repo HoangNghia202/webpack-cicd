@@ -2,6 +2,7 @@
 /node_modules/
 /dist/
 /coverage/
+/.webpack-build-*/
 
 # Local environment files
 .env.local
