@@ -16,6 +16,9 @@ export default function Settings() {
   return (
     <section>
       <h1>Settings</h1>
+      <p className="mt-4 text-sm text-slate-500">
+        {process.env.APP_NAME} · version: {__APP_VERSION__} · api: {process.env.API_URL}
+      </p>
       <button type="button" onClick={toggle}>
         {dark ? 'Switch to light' : 'Switch to dark'}
       </button>

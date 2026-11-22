@@ -51,3 +51,9 @@ it('navigates with the main nav', () => {
   fireEvent.click(screen.getByRole('link', { name: 'Tables' }));
   expect(screen.getByRole('heading', { name: 'Tables' })).toBeInTheDocument();
 });
+
+it('shows env-derived info on the settings page', () => {
+  renderAt('/settings');
+  expect(screen.getByText(/Webpack Lab \(test\)/)).toBeInTheDocument();
+  expect(screen.getByText(/version: test/i)).toBeInTheDocument();
+});

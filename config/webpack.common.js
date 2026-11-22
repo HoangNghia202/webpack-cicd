@@ -1,6 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const { DefinePlugin } = require('webpack');
+const pkg = require('../package.json');
 
 const root = path.resolve(__dirname, '..');
 
@@ -73,5 +75,6 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({ template: './public/index.html' }),
     new ForkTsCheckerWebpackPlugin(),
+    new DefinePlugin({ __APP_VERSION__: JSON.stringify(pkg.version) }),
   ],
 };

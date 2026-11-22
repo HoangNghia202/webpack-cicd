@@ -74,4 +74,10 @@ describe('production build', () => {
   it('emits fontsource woff2 files under fonts/', () => {
     expect(build.files.some((f) => /^fonts\/.+\.woff2$/.test(f))).toBe(true);
   });
+
+  it('inlines production env values and the app version', () => {
+    expect(build.js).toContain('Webpack Lab');
+    expect(build.js).not.toContain('(dev)');
+    expect(build.js).not.toContain('__APP_VERSION__');
+  });
 });
