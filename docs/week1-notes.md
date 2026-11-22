@@ -89,3 +89,12 @@ plan requires react-router-dom 6, and the current app uses static links without
 SSR or data-router hydration. Reassess the advisories before introducing
 user-controlled navigation or SSR; this decision does not establish that future
 uses are safe.
+
+The current full `npm audit` reports seven moderate findings; the production
+audit reports only the two React Router findings above. Development
+dependencies also include advisories through fork-ts-checker/minimatch and
+webpack-dev-server 5.2.7/sockjs/uuid (GHSA-w5hq-g745-h8pq). npm's suggested
+webpack-dev-server fix is a major upgrade to v6, which conflicts with this
+week's plan. Keep the development server on a controlled local network and
+reassess these advisories before exposing it to untrusted networks or adding an
+audit gate; do not apply a forced major upgrade blindly.

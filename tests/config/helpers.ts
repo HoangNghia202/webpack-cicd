@@ -1,5 +1,5 @@
-import { randomUUID } from 'node:crypto';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import webpack, { Configuration, Stats } from 'webpack';
 import prodConfig from '../../config/webpack.prod';
@@ -18,16 +18,22 @@ export function runBuild(config: Configuration): Promise<Stats> {
 }
 
 export async function buildProd() {
-  const outDir = path.resolve(process.cwd(), `.webpack-build-${randomUUID()}`);
+  const outDir = fs.mkdtempSync(path.join(os.tmpdir(), 'webpack-cicd-lab-build-'));
   const config: Configuration = {
     ...prodConfig,
     output: { ...prodConfig.output, path: outDir },
   };
-  const stats = await runBuild(config);
-  const files = fs.readdirSync(outDir, { recursive: true }) as string[];
-  const js = files
-    .filter((f) => f.endsWith('.js'))
-    .map((f) => fs.readFileSync(path.join(outDir, f), 'utf8'))
-    .join('\n');
-  return { outDir, stats, files, js };
+
+  try {
+    const stats = await runBuild(config);
+    const files = fs.readdirSync(outDir, { recursive: true }) as string[];
+    const js = files
+      .filter((f) => f.endsWith('.js'))
+      .map((f) => fs.readFileSync(path.join(outDir, f), 'utf8'))
+      .join('\n');
+    return { outDir, stats, files, js };
+  } catch (error) {
+    fs.rmSync(outDir, { recursive: true, force: true });
+    throw error;
+  }
 }

@@ -15,6 +15,15 @@ afterAll(() => {
 });
 
 describe('production build', () => {
+  it('writes temporary output outside the repository', () => {
+    const relativePath = path.relative(process.cwd(), build.outDir);
+    expect(
+      relativePath === '..' ||
+        relativePath.startsWith(`..${path.sep}`) ||
+        path.isAbsolute(relativePath),
+    ).toBe(true);
+  });
+
   it('emits index.html that references the main bundle', () => {
     const html = fs.readFileSync(path.join(build.outDir, 'index.html'), 'utf8');
     expect(html).toContain('js/main.js');
