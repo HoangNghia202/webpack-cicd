@@ -1,0 +1,14 @@
+# Node.js and build output
+/node_modules/
+/dist/
+/coverage/
+
+# Local environment files
+.env.local
+.env.*.local
+
+# Local workspace files
+.DS_Store
+.idea/
+*.iml
+.worktrees/
