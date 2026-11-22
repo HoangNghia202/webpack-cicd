@@ -1,10 +1,11 @@
 import { users } from '@/data/users';
+import styles from './Tables.module.scss';
 
 export default function Tables() {
   return (
     <section>
       <h1>Tables</h1>
-      <table>
+      <table className={styles.table}>
         <thead>
           <tr>
             <th>Name</th>

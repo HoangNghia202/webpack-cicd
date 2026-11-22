@@ -1,0 +1,15 @@
+@use 'variables' as *;
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  color: $text;
+}
+
+a {
+  color: $brand;
+}
+
+.dark body {
+  color: #e2e8f0;
+}

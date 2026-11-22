@@ -24,4 +24,34 @@ describe('production build', () => {
     expect(build.files).toContain('js/main.js');
     expect(build.files).toContain('js/main.js.map');
   });
+
+  it('processes Tailwind through PostCSS', () => {
+    expect(build.js).toContain('--tw-border-spacing-x');
+  });
+
+  it('compiles SCSS variables (no raw $brand left)', () => {
+    expect(build.js).toContain('#4f46e5');
+    expect(build.js).not.toContain('$brand');
+  });
+
+  it('generates scoped class names for CSS Modules', () => {
+    expect(build.js).toMatch(/Tables\S*__table--/);
+  });
+
+  it('renders the table with its scoped class in the production bundle', async () => {
+    const { JSDOM, VirtualConsole } = require('jsdom');
+    const dom = new JSDOM('<!doctype html><div id="root"></div>', {
+      url: 'http://localhost/tables',
+      runScripts: 'dangerously',
+      virtualConsole: new VirtualConsole(),
+    });
+
+    try {
+      dom.window.eval(build.js);
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      expect(dom.window.document.querySelector('table')?.className).toMatch(/Tables\S*__table--/);
+    } finally {
+      dom.window.close();
+    }
+  });
 });
