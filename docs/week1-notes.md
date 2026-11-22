@@ -72,3 +72,11 @@ error appeared in the React Refresh overlay, which disappeared after restoring
 the file. The three routes rendered their expected headings, and direct
 requests, including an unknown path, returned the SPA shell. This was an
 automated headless-browser check, not an interactive visual inspection.
+
+As a visual follow-up, the Settings route was opened in headful Chrome and
+inspected alongside the rendered page. DevTools Sources showed the
+`webpack-cicd-lab/src/pages/Settings.tsx` source-map entry; opening it displayed
+the original TSX with its source line numbers and `Settings` component, rather
+than only the generated bundle. The page also visibly rendered its heading,
+environment/version text, SVG and font assets, and the light navigation link
+on the dark sidebar.
